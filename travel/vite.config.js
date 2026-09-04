@@ -20,6 +20,14 @@ function vite4HotCompat() {
 
 export default defineConfig({
   plugins: [vite4HotCompat(), uni()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        quietDeps: true,
+        silenceDeprecations: ['import', 'legacy-js-api', 'global-builtin', 'color-functions']
+      }
+    }
+  },
   server: {
     host: '0.0.0.0',
     port: 5173,
