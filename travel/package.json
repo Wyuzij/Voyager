@@ -1,0 +1,36 @@
+{
+  "name": "travel",
+  "version": "1.0.0",
+  "description": "旅游导览小程序",
+  "scripts": {
+    "dev:mp-weixin": "node scripts/uni-cli.js -p mp-weixin",
+    "build:mp-weixin": "node scripts/uni-cli.js build -p mp-weixin",
+    "dev:h5": "node scripts/uni-cli.js",
+    "build:h5": "node scripts/uni-cli.js build",
+    "preview:pack": "node scripts/uni-cli.js build && node scripts/copy-h5.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@dcloudio/uni-app": "^3.0.0-3090920231225001",
+    "@dcloudio/uni-app-plus": "^3.0.0-3090920231225001",
+    "@dcloudio/uni-components": "^3.0.0-3090920231225001",
+    "@dcloudio/uni-h5": "^3.0.0-3090920231225001",
+    "@dcloudio/uni-mp-weixin": "^3.0.0-3090920231225001",
+    "clipboard": "^2.0.11",
+    "dayjs": "^1.11.20",
+    "vue": "^3.2.45"
+  },
+  "devDependencies": {
+    "@dcloudio/types": "^3.4.0",
+    "@dcloudio/uni-automator": "^3.0.0-3090920231225001",
+    "@dcloudio/uni-cli-shared": "^3.0.0-3090920231225001",
+    "@dcloudio/uni-stacktracey": "^3.0.0-3090920231225001",
+    "@dcloudio/vite-plugin-uni": "^3.0.0-alpha-5000720260327001",
+    "@vue/test-utils": "^2.4.6",
+    "sass": "^1.103.1",
+    "sharp": "^0.34.5",
+    "vite": "4.4.9",
+    "vitest": "^4.1.4"
+  }
+}

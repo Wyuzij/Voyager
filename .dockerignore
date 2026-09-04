@@ -1,0 +1,10 @@
+**/node_modules
+**/unpackage
+**/dist
+**/.git
+**/__pycache__
+**/*.pyc
+backend/logs
+backend/.env
+travel/node_modules
+*.md

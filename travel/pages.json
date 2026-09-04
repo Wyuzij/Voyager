@@ -1,0 +1,150 @@
+{
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"^u--(.*)": "@/uni_modules/uview-plus/components/u-$1/u-$1.vue",
+			"^up-(.*)": "@/uni_modules/uview-plus/components/u-$1/u-$1.vue",
+			"^u-([^-].*)": "@/uni_modules/uview-plus/components/u-$1/u-$1.vue"
+		}
+	},
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"navigationStyle": "custom",
+				"navigationBarBackgroundColor": "#F5E6D3",
+				"backgroundColor": "#FDF8F3"
+			}
+		},
+		{
+			"path": "pages/favorite/favorite",
+			"style": {
+				"navigationBarTitleText": "我的收藏",
+				"navigationStyle": "custom",
+				"navigationBarBackgroundColor": "#F5E6D3",
+				"backgroundColor": "#FDF8F3"
+			}
+		},
+		{
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationStyle": "custom",
+				"navigationBarBackgroundColor": "#F5E6D3",
+				"backgroundColor": "#FDF8F3"
+			}
+		},
+		{
+			"path": "pages/detail/detail",
+			"style": {
+				"navigationBarTitleText": "景点详情",
+				"navigationStyle": "custom",
+				"navigationBarBackgroundColor": "#000000",
+				"backgroundColor": "#FDF8F3"
+			}
+		},
+		{
+			"path": "pages/plan/plan",
+			"style": {
+				"navigationBarTitleText": "路线规划",
+				"navigationStyle": "custom",
+				"navigationBarBackgroundColor": "#F5E6D3",
+				"backgroundColor": "#FDF8F3"
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationStyle": "custom",
+				"navigationBarBackgroundColor": "#F5E6D3",
+				"backgroundColor": "#F5E6D3"
+			}
+		},
+		{
+			"path": "pages/orders/orders",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"navigationStyle": "custom",
+				"navigationBarBackgroundColor": "#F5E6D3",
+				"backgroundColor": "#FDF8F3"
+			}
+		},
+		{
+			"path": "pages/coupons/coupons",
+			"style": {
+				"navigationBarTitleText": "优惠券",
+				"navigationStyle": "custom",
+				"navigationBarBackgroundColor": "#F5E6D3",
+				"backgroundColor": "#FDF8F3"
+			}
+		},
+		{
+			"path": "pages/history/history",
+			"style": {
+				"navigationBarTitleText": "浏览历史",
+				"navigationStyle": "custom",
+				"navigationBarBackgroundColor": "#F5E6D3",
+				"backgroundColor": "#FDF8F3"
+			}
+		},
+		{
+			"path": "pages/settings/settings",
+			"style": {
+				"navigationBarTitleText": "设置",
+				"navigationStyle": "custom",
+				"navigationBarBackgroundColor": "#F5E6D3",
+				"backgroundColor": "#FDF8F3"
+			}
+		},
+		{
+			"path": "pages/booking/booking",
+			"style": {
+				"navigationBarTitleText": "预订",
+				"navigationStyle": "custom",
+				"navigationBarBackgroundColor": "#F5E6D3",
+				"backgroundColor": "#FDF8F3"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "行迹",
+		"navigationBarBackgroundColor": "#F5E6D3",
+		"backgroundColor": "#FDF8F3"
+	},
+	"tabBar": {
+		"color": "#8B7355",
+		"selectedColor": "#C75B39",
+		"backgroundColor": "#FFFFFF",
+		"borderStyle": "white",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"text": "首页",
+				"iconPath": "static/tab-home.png",
+				"selectedIconPath": "static/tab-home-active.png"
+			},
+			{
+				"pagePath": "pages/plan/plan",
+				"text": "规划",
+				"iconPath": "static/tab-plan.png",
+				"selectedIconPath": "static/tab-plan-active.png"
+			},
+			{
+				"pagePath": "pages/favorite/favorite",
+				"text": "收藏",
+				"iconPath": "static/tab-favorite.png",
+				"selectedIconPath": "static/tab-favorite-active.png"
+			},
+			{
+				"pagePath": "pages/mine/mine",
+				"text": "我的",
+				"iconPath": "static/tab-mine.png",
+				"selectedIconPath": "static/tab-mine-active.png"
+			}
+		]
+	},
+	"uniIdRouter": {}
+}

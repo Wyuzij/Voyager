@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm ci --prefix travel",
+  "buildCommand": "npm run build:h5 --prefix travel",
+  "outputDirectory": "travel/dist/build/h5",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

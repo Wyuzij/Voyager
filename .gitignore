@@ -1,0 +1,30 @@
+# secrets
+.env
+backend/.env
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# node / uni-app
+node_modules/
+travel/node_modules/
+travel/unpackage/
+travel/dist/
+dist/
+
+# logs and local runtime
+backend/logs/
+*.log
+
+# editor / OS
+.idea/
+.vscode/
+.cursor/
+*.swp
+Thumbs.db
+.DS_Store

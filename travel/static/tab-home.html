@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: transparent; }
+.icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home {
+  width: 28px;
+  height: 24px;
+  border: 3px solid #8B7355;
+  border-bottom: none;
+  position: relative;
+  border-radius: 4px 4px 0 0;
+}
+.home::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-bottom: 14px solid #8B7355;
+}
+</style>
+</head>
+<body>
+<div class="icon">
+  <div class="home"></div>
+</div>
+</body>
+</html>
