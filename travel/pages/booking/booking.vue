@@ -1,12 +1,6 @@
 <template>
 	<view class="page">
-		<view class="header">
-			<view class="nav">
-				<text class="back" @click="goBack">←</text>
-				<text class="title">确认预订</text>
-				<text class="ghost"></text>
-			</view>
-		</view>
+		<app-navbar title="确认预订"></app-navbar>
 
 		<view class="spot" v-if="spot">
 			<image class="cover" :src="spot.images[0]" mode="aspectFill"></image>
@@ -21,16 +15,24 @@
 			<view class="field">
 				<text class="label">游玩日期</text>
 				<picker mode="date" :value="form.visitDate" :start="today" @change="onDate">
-					<text class="value">{{ form.visitDate || '选择日期' }}</text>
+					<view class="picker-value">
+						<text class="value">{{ form.visitDate || '选择日期' }}</text>
+						<u-icon name="arrow-right" color="#B8A590" size="14"></u-icon>
+					</view>
 				</picker>
 			</view>
 			<view class="field">
 				<text class="label">人数</text>
-				<view class="stepper">
-					<text class="step" @click="changeQty(-1)">−</text>
-					<text class="qty">{{ form.quantity }}</text>
-					<text class="step" @click="changeQty(1)">+</text>
-				</view>
+				<u-number-box
+					v-model="form.quantity"
+					:min="1"
+					:max="9"
+					integer
+					color="#C75B39"
+					bgColor="#F5E6D3"
+					:buttonSize="28"
+					@change="onQtyChange"
+				></u-number-box>
 			</view>
 			<view class="field">
 				<text class="label">联系人</text>
@@ -45,7 +47,10 @@
 		<view class="card">
 			<view class="field" @click="pickCoupon">
 				<text class="label">优惠券</text>
-				<text class="value">{{ selectedCoupon ? selectedCoupon.title : (coupons.length ? '选择优惠券' : '暂无可用') }}</text>
+				<view class="picker-value">
+					<text class="value">{{ selectedCoupon ? selectedCoupon.title : (coupons.length ? '选择优惠券' : '暂无可用') }}</text>
+					<u-icon name="arrow-right" color="#B8A590" size="14"></u-icon>
+				</view>
 			</view>
 			<view class="bill">
 				<text>票价小计</text>
@@ -61,8 +66,14 @@
 			</view>
 		</view>
 
-		<view class="submit" @click="submit">
-			<text>提交订单 · ¥{{ payAmount }}</text>
+		<view class="submit-wrap">
+			<u-button
+				type="primary"
+				shape="circle"
+				:text="'提交订单 · ¥' + payAmount"
+				:customStyle="{ height: '48px', fontSize: '16px' }"
+				@click="submit"
+			></u-button>
 		</view>
 	</view>
 </template>
@@ -113,18 +124,11 @@ function refreshCoupons() {
 	}
 }
 
-function goBack() {
-	uni.navigateBack()
-}
-
 function onDate(e) {
 	form.value.visitDate = e.detail.value
 }
 
-function changeQty(delta) {
-	const next = form.value.quantity + delta
-	if (next < 1 || next > 9) return
-	form.value.quantity = next
+function onQtyChange() {
 	refreshCoupons()
 }
 
@@ -186,11 +190,7 @@ function submit() {
 </script>
 
 <style>
-.page { min-height: 100vh; background: #FDF8F3; padding-bottom: 160rpx; }
-.header { padding: 88rpx 32rpx 16rpx; background: linear-gradient(180deg, #F5E6D3 0%, #FDF8F3 100%); }
-.nav { display: flex; align-items: center; justify-content: space-between; }
-.back, .ghost { width: 64rpx; font-size: 36rpx; color: #2D1810; }
-.title { font-size: 36rpx; font-weight: 700; color: #2D1810; }
+.page { min-height: 100vh; background: #FDF8F3; padding-bottom: 180rpx; }
 .spot { margin: 12rpx 32rpx 20rpx; background: #fff; border-radius: 20rpx; overflow: hidden; }
 .cover { width: 100%; height: 280rpx; }
 .spot-info { padding: 20rpx 24rpx 24rpx; display: flex; flex-direction: column; gap: 8rpx; }
@@ -201,13 +201,11 @@ function submit() {
 .field { display: flex; align-items: center; justify-content: space-between; min-height: 96rpx; border-bottom: 1rpx solid #F0E6D8; }
 .field:last-child { border-bottom: none; }
 .label { font-size: 28rpx; color: #5D4E3C; }
+.picker-value { display: flex; align-items: center; gap: 8rpx; }
 .value, .input { font-size: 28rpx; color: #2D1810; text-align: right; }
 .input { width: 360rpx; }
-.stepper { display: flex; align-items: center; gap: 24rpx; }
-.step { width: 48rpx; height: 48rpx; border-radius: 50%; background: #F5E6D3; text-align: center; line-height: 48rpx; color: #C75B39; }
-.qty { font-size: 30rpx; font-weight: 600; }
 .bill { display: flex; justify-content: space-between; padding: 16rpx 0; font-size: 26rpx; color: #8B7355; }
 .minus { color: #2E7D32; }
 .total { font-size: 30rpx; color: #2D1810; font-weight: 700; }
-.submit { position: fixed; left: 32rpx; right: 32rpx; bottom: 40rpx; height: 96rpx; border-radius: 48rpx; background: linear-gradient(135deg, #C75B39, #E8A090); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 30rpx; font-weight: 600; box-shadow: 0 8rpx 24rpx rgba(199,91,57,0.3); }
+.submit-wrap { position: fixed; left: 32rpx; right: 32rpx; bottom: 40rpx; z-index: 20; }
 </style>

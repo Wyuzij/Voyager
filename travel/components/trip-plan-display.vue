@@ -5,7 +5,7 @@
       <view class="header-bg"></view>
       <view class="header-content">
         <view class="back-btn" @click="$emit('back')">
-          <text class="back-icon">←</text>
+          <u-icon name="arrow-left" color="#2D1810" size="18"></u-icon>
         </view>
         <view class="title-group">
           <text class="plan-city">{{ tripPlan.city }}</text>
@@ -17,7 +17,7 @@
     <!-- ========== 概览条 ========== -->
     <view class="plan-summary">
       <view class="summary-item" v-if="tripPlan.weather_info && tripPlan.weather_info.length">
-        <text class="summary-icon">🌡️</text>
+        <u-icon name="star-fill" color="#C75B39" size="18"></u-icon>
         <view class="summary-text">
           <text class="summary-label">天气</text>
           <text class="summary-value">{{ tripPlan.weather_info[0].day_weather }} {{ tripPlan.weather_info[0].day_temp }}°</text>
@@ -25,7 +25,7 @@
       </view>
       <view class="summary-divider" v-if="tripPlan.weather_info && tripPlan.weather_info.length"></view>
       <view class="summary-item">
-        <text class="summary-icon">📅</text>
+        <u-icon name="calendar-fill" color="#C75B39" size="18"></u-icon>
         <view class="summary-text">
           <text class="summary-label">天数</text>
           <text class="summary-value">{{ tripPlan.days.length }}天</text>
@@ -33,14 +33,14 @@
       </view>
       <view class="summary-divider"></view>
       <view class="summary-item" v-if="tripPlan.budget && tripPlan.budget.total">
-        <text class="summary-icon">💰</text>
+        <u-icon name="rmb-circle-fill" color="#C75B39" size="18"></u-icon>
         <view class="summary-text">
           <text class="summary-label">预算</text>
           <text class="summary-value">¥{{ tripPlan.budget.total }}</text>
         </view>
       </view>
       <view class="summary-item" v-else>
-        <text class="summary-icon">🎒</text>
+        <u-icon name="map-fill" color="#C75B39" size="18"></u-icon>
         <view class="summary-text">
           <text class="summary-label">行程</text>
           <text class="summary-value">{{ tripPlan.days.length }}天{{ countTotalAttractions() }}景</text>
@@ -62,7 +62,7 @@
           </view>
           <!-- 当天天气 -->
           <view class="day-weather" v-if="tripPlan.weather_info && tripPlan.weather_info[dayIndex]">
-            <text class="weather-icon">{{ getWeatherIcon(tripPlan.weather_info[dayIndex].day_weather) }}</text>
+            <u-icon :name="weatherIconName(tripPlan.weather_info[dayIndex].day_weather)" color="#C75B39" size="16"></u-icon>
             <view class="weather-detail">
               <text class="weather-temp">{{ tripPlan.weather_info[dayIndex].day_temp }}° / {{ tripPlan.weather_info[dayIndex].night_temp }}°</text>
               <text class="weather-wind" v-if="tripPlan.weather_info[dayIndex].wind_direction">
@@ -81,7 +81,7 @@
         <!-- 景点 -->
         <view class="day-section" v-if="day.attractions && day.attractions.length">
           <view class="section-title">
-            <text class="section-icon">📍</text>
+            <u-icon name="map-fill" color="#C75B39" size="16"></u-icon>
             <text class="section-text">景点</text>
           </view>
           <view class="attraction-list">
@@ -99,8 +99,8 @@
                 </view>
                 <text class="attr-desc" v-if="attr.description">{{ attr.description }}</text>
                 <view class="attr-meta">
-                  <text class="attr-time" v-if="attr.visit_duration">⏱️ {{ attr.visit_duration }}分钟</text>
-                  <text class="attr-price" v-if="attr.ticket_price">💰 ¥{{ attr.ticket_price }}</text>
+                  <text class="attr-time" v-if="attr.visit_duration">{{ attr.visit_duration }}分钟</text>
+                  <text class="attr-price" v-if="attr.ticket_price">¥{{ attr.ticket_price }}</text>
                   <text class="attr-addr" v-if="attr.address">{{ attr.address }}</text>
                 </view>
               </view>
@@ -111,7 +111,7 @@
         <!-- 餐饮 -->
         <view class="day-section" v-if="day.meals && day.meals.length">
           <view class="section-title">
-            <text class="section-icon">🍽️</text>
+            <u-icon name="red-packet-fill" color="#C75B39" size="16"></u-icon>
             <text class="section-text">餐饮</text>
           </view>
           <view class="meal-list">
@@ -131,7 +131,7 @@
         <!-- 酒店 -->
         <view class="day-section" v-if="day.hotel && day.hotel.name">
           <view class="section-title">
-            <text class="section-icon">🏨</text>
+            <u-icon name="home-fill" color="#C75B39" size="16"></u-icon>
             <text class="section-text">住宿</text>
           </view>
           <view class="hotel-card">
@@ -139,14 +139,15 @@
               <text class="hotel-name">{{ day.hotel.name }}</text>
               <text class="hotel-type" v-if="day.hotel.type">{{ day.hotel.type }}</text>
             </view>
-            <text class="hotel-address" v-if="day.hotel.address">📍 {{ day.hotel.address }}</text>
+            <text class="hotel-address" v-if="day.hotel.address">{{ day.hotel.address }}</text>
             <view class="hotel-meta">
               <text class="hotel-price" v-if="day.hotel.estimated_cost">¥{{ day.hotel.estimated_cost }}/晚</text>
               <text class="hotel-range" v-if="day.hotel.price_range">· {{ day.hotel.price_range }}</text>
               <text class="hotel-distance" v-if="day.hotel.distance">· {{ day.hotel.distance }}</text>
             </view>
             <view class="hotel-rating" v-if="day.hotel.rating">
-              <text>⭐ {{ day.hotel.rating }}</text>
+              <u-icon name="star-fill" color="#C75B39" size="12"></u-icon>
+              <text>{{ day.hotel.rating }}</text>
             </view>
           </view>
         </view>
@@ -156,7 +157,7 @@
     <!-- ========== 预算明细 ========== -->
     <view class="budget-section" v-if="tripPlan.budget && tripPlan.budget.total">
       <view class="budget-title">
-        <text class="budget-icon">💰</text>
+        <u-icon name="rmb-circle-fill" color="#C75B39" size="16"></u-icon>
         <text class="budget-text">预算明细</text>
       </view>
       <view class="budget-grid">
@@ -186,7 +187,7 @@
     <!-- ========== 旅行建议 ========== -->
     <view class="suggestion-section" v-if="tripPlan.overall_suggestions">
       <view class="suggestion-title">
-        <text class="suggestion-icon">💡</text>
+        <u-icon name="info-circle-fill" color="#C75B39" size="16"></u-icon>
         <text class="suggestion-text">旅行建议</text>
       </view>
       <text class="suggestion-content">{{ tripPlan.overall_suggestions }}</text>
@@ -205,22 +206,19 @@ const props = defineProps({
   }
 })
 
-function getWeatherIcon(weather) {
-  if (!weather) return '🌤️'
-  if (weather.includes('晴')) return '☀️'
-  if (weather.includes('云') || weather.includes('阴')) return '⛅'
-  if (weather.includes('雨')) return '🌧️'
-  if (weather.includes('雪')) return '❄️'
-  if (weather.includes('雾') || weather.includes('霾')) return '🌫️'
-  return '🌤️'
+function weatherIconName(weather) {
+  if (!weather) return 'star-fill'
+  if (weather.includes('雨') || weather.includes('雪')) return 'minus-circle-fill'
+  if (weather.includes('云') || weather.includes('阴') || weather.includes('雾') || weather.includes('霾')) return 'more-circle-fill'
+  return 'star-fill'
 }
 
 function getMealTypeText(type) {
   const map = {
-    breakfast: '🌅 早餐',
-    lunch: '☀️ 午餐',
-    dinner: '🌙 晚餐',
-    snack: '🍪 小吃'
+    breakfast: '早餐',
+    lunch: '午餐',
+    dinner: '晚餐',
+    snack: '小吃'
   }
   return map[type] || type
 }
@@ -703,6 +701,9 @@ function countTotalAttractions() {
 }
 
 .hotel-rating {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
   font-size: 22rpx;
   color: #8B7355;
   margin-top: 4rpx;

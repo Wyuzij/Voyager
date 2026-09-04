@@ -3,9 +3,7 @@
         <view class="header-section">
             <view class="header-content">
                 <text class="page-title">我的收藏</text>
-                <view class="count-badge" v-if="favoriteList.length">
-                    <text class="count-text">{{ favoriteList.length }}</text>
-                </view>
+                <u-badge v-if="favoriteList.length" :value="favoriteList.length" bgColor="#C75B39" :offset="[0, 0]"></u-badge>
             </view>
             <text class="page-subtitle">收藏您心仪的目的地</text>
         </view>
@@ -22,11 +20,15 @@
                     <view class="item-header">
                         <text class="item-title">{{ item.title }}</text>
                         <view class="rating-tag">
+                            <u-icon name="star-fill" color="#C75B39" size="12"></u-icon>
                             <text class="rating-value">{{ item.rating || '4.8' }}</text>
                         </view>
                     </view>
                     <view class="item-meta">
-                        <text class="item-location">📍 {{ item.location }}</text>
+                        <view class="item-location">
+                            <u-icon name="map" color="#8B7355" size="12"></u-icon>
+                            <text>{{ item.location }}</text>
+                        </view>
                         <text class="item-sold">{{ item.sold || '1000' }}人已购</text>
                     </view>
                     <view class="item-footer">
@@ -36,7 +38,7 @@
                             <text class="original-price" v-if="item.originalPrice">¥{{ item.originalPrice }}</text>
                         </view>
                         <view class="delete-button" @click.stop="removeFavorite(index)">
-                            <text class="delete-icon">✕</text>
+                            <u-icon name="trash" color="#C75B39" size="16"></u-icon>
                         </view>
                     </view>
                 </view>
@@ -44,15 +46,11 @@
         </view>
 
         <view class="empty-state" v-else>
-            <view class="empty-content">
-                <view class="empty-icon">♡</view>
-                <text class="empty-title">暂无收藏</text>
-                <text class="empty-desc">探索精彩目的地，收藏心仪景点</text>
-                <view class="explore-button" @click="goToHome">
-                    <text class="explore-text">去探索</text>
-                </view>
-            </view>
+            <u-empty mode="favor" text="暂无收藏" icon-color="#C75B39">
+                <u-button type="primary" shape="circle" text="去探索" size="small" @click="goToHome"></u-button>
+            </u-empty>
         </view>
+		<custom-tabbar current="favorite"></custom-tabbar>
     </view>
 </template>
 
@@ -75,6 +73,7 @@ const placeholderImages = [
 ]
 
 onShow(() => {
+    uni.hideTabBar({ fail() {} })
     loadFavorites()
 })
 
@@ -113,16 +112,13 @@ function goToHome() {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background: #f2f2f7;
-    padding-bottom: 40rpx;
+    background: #FDF8F3;
+    padding-bottom: 24rpx;
 }
 
 .header-section {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    padding: 100rpx 40rpx 40rpx;
-    border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
+    background: linear-gradient(180deg, #F5E6D3 0%, #FDF8F3 100%);
+    padding: 100rpx 40rpx 32rpx;
 }
 
 .header-content {
@@ -135,7 +131,7 @@ function goToHome() {
 .page-title {
     font-size: 52rpx;
     font-weight: 700;
-    color: #1c1c1e;
+    color: #2D1810;
     letter-spacing: -1rpx;
 }
 
@@ -153,7 +149,7 @@ function goToHome() {
 
 .page-subtitle {
     font-size: 28rpx;
-    color: #8e8e93;
+    color: #8B7355;
 }
 
 .list-section {
@@ -225,7 +221,7 @@ function goToHome() {
 .item-title {
     font-size: 32rpx;
     font-weight: 600;
-    color: #1c1c1e;
+    color: #2D1810;
     flex: 1;
     margin-right: 12rpx;
     display: -webkit-box;
@@ -236,14 +232,17 @@ function goToHome() {
 }
 
 .rating-tag {
-    background: linear-gradient(135deg, #34C759 0%, #30D158 100%);
+    background: #F8E8E2;
     padding: 6rpx 16rpx;
     border-radius: 12rpx;
+    display: flex;
+    align-items: center;
+    gap: 6rpx;
 }
 
 .rating-value {
     font-size: 24rpx;
-    color: #fff;
+    color: #C75B39;
     font-weight: 600;
 }
 
@@ -255,13 +254,16 @@ function goToHome() {
 }
 
 .item-location {
+    display: flex;
+    align-items: center;
+    gap: 6rpx;
     font-size: 26rpx;
-    color: #8e8e93;
+    color: #8B7355;
 }
 
 .item-sold {
     font-size: 26rpx;
-    color: #8e8e93;
+    color: #8B7355;
 }
 
 .item-footer {
@@ -278,13 +280,13 @@ function goToHome() {
 
 .currency {
     font-size: 26rpx;
-    color: #FF9500;
+    color: #C75B39;
     font-weight: 600;
 }
 
 .item-price {
     font-size: 40rpx;
-    color: #FF9500;
+    color: #C75B39;
     font-weight: 700;
 }
 
@@ -297,12 +299,11 @@ function goToHome() {
 .delete-button {
     width: 64rpx;
     height: 64rpx;
-    background: linear-gradient(135deg, #FF3B30 0%, #FF453A 100%);
+    background: #F8E8E2;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4rpx 12rpx rgba(255, 59, 48, 0.3);
 }
 
 .delete-button:active {

@@ -17,7 +17,7 @@
             </view>
             <view class="logo-area">
                 <view class="logo-emblem">
-                    <text class="emblem-icon">◈</text>
+                    <u-icon name="map-fill" color="#FFFFFF" size="28"></u-icon>
                 </view>
             </view>
             <text class="app-title">行迹</text>
@@ -37,7 +37,7 @@
                     </view>
                     <view class="input-wrapper">
                         <view class="input-icon">
-                            <text class="icon-text">◉</text>
+                            <u-icon name="phone" color="#C75B39" size="18"></u-icon>
                         </view>
                         <input class="form-input" v-model="phone" type="number" maxlength="11" placeholder="请输入手机号"
                             placeholder-class="placeholder" />
@@ -51,7 +51,7 @@
                     <view class="code-row">
                         <view class="input-wrapper flex-1">
                             <view class="input-icon">
-                                <text class="icon-text">◇</text>
+                                <u-icon name="lock" color="#C75B39" size="18"></u-icon>
                             </view>
                             <input class="form-input" v-model="code" type="number" maxlength="6" placeholder="请输入验证码"
                                 placeholder-class="placeholder" />
@@ -66,7 +66,7 @@
                 <view class="agreement-row">
                     <view class="checkbox-wrapper" @click="toggleAgree">
                         <view class="checkbox" :class="{ checked: agreed }">
-                            <text class="check-icon" v-if="agreed">✓</text>
+                            <u-icon v-if="agreed" name="checkbox-mark" color="#FFFFFF" size="12"></u-icon>
                         </view>
                         <view class="agreement-text">
                             <text class="text">我已阅读并同意</text>
@@ -82,7 +82,7 @@
                 </view>
 
                 <view class="quick-login" @click="quickLogin">
-                    <text class="quick-icon">⚡</text>
+                    <u-icon name="checkmark-circle-fill" color="#C75B39" size="16"></u-icon>
                     <text class="quick-text">快捷登录</text>
                 </view>
             </view>
@@ -97,13 +97,13 @@
             <view class="social-icons">
                 <view class="social-btn wechat" @click="wechatLogin">
                     <view class="social-icon">
-                        <text class="icon">W</text>
+                        <u-icon name="weixin-fill" color="#07C160" size="22"></u-icon>
                     </view>
                     <text class="social-label">微信</text>
                 </view>
                 <view class="social-btn alipay" @click="alipayLogin">
                     <view class="social-icon">
-                        <text class="icon">Z</text>
+                        <u-icon name="zhifubao-circle-fill" color="#1677FF" size="22"></u-icon>
                     </view>
                     <text class="social-label">支付宝</text>
                 </view>

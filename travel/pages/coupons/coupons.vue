@@ -1,18 +1,14 @@
 <template>
 	<view class="page">
+		<app-navbar title="优惠券"></app-navbar>
 		<view class="header">
-			<view class="nav">
-				<text class="back" @click="goBack">←</text>
-				<text class="title">优惠券</text>
-				<text class="ghost"></text>
-			</view>
-			<view class="tabs">
-				<view class="tab" :class="{ active: onlyUnused === true }" @click="onlyUnused = true"><text>可使用</text></view>
-				<view class="tab" :class="{ active: onlyUnused === false }" @click="onlyUnused = false"><text>全部</text></view>
-			</view>
+			<u-subsection :list="['可使用', '全部']" :current="onlyUnused ? 0 : 1" activeColor="#C75B39" @change="onCouponTab"></u-subsection>
 		</view>
 
-		<view class="list">
+		<view class="empty" v-if="!visible.length">
+			<u-empty mode="coupon" text="暂无优惠券" icon-color="#C75B39"></u-empty>
+		</view>
+		<view class="list" v-else>
 			<view class="ticket" :class="{ used: coupon.used || expired(coupon) }" v-for="coupon in visible" :key="coupon.id">
 				<view class="left">
 					<text class="amount" v-if="coupon.type === 'amount'">¥{{ coupon.amount }}</text>
@@ -36,6 +32,10 @@ import { computed, ref } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import { getCoupons, seedCoupons } from '../../utils/user-store.js'
 
+function onCouponTab(index) {
+	onlyUnused.value = index === 0
+}
+
 const coupons = ref([])
 const onlyUnused = ref(true)
 
@@ -58,20 +58,12 @@ function expireText(ts) {
 	return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`
 }
 
-function goBack() {
-	uni.navigateBack({ fail: () => uni.switchTab({ url: '/pages/mine/mine' }) })
-}
 </script>
 
 <style>
 .page { min-height: 100vh; background: #FDF8F3; }
-.header { padding: 88rpx 32rpx 12rpx; background: linear-gradient(180deg, #F5E6D3 0%, #FDF8F3 100%); }
-.nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24rpx; }
-.back, .ghost { width: 64rpx; font-size: 36rpx; color: #2D1810; }
-.title { font-size: 36rpx; font-weight: 700; color: #2D1810; }
-.tabs { display: flex; gap: 12rpx; }
-.tab { padding: 12rpx 24rpx; border-radius: 28rpx; background: #fff; color: #8B7355; font-size: 24rpx; }
-.tab.active { background: #C75B39; color: #fff; }
+.header { padding: 16rpx 32rpx 8rpx; }
+.empty { padding: 80rpx 32rpx; }
 .list { padding: 24rpx 32rpx; }
 .ticket { display: flex; background: #fff; border-radius: 20rpx; overflow: hidden; margin-bottom: 20rpx; box-shadow: 0 4rpx 16rpx rgba(45,24,16,0.06); }
 .ticket.used { opacity: 0.5; }

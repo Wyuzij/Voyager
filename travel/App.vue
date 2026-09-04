@@ -7,7 +7,7 @@ export default {
 		seedCoupons()
 	},
 	onShow: function () {
-		console.log('App Show')
+		uni.hideTabBar({ fail() {} })
 	},
 	onHide: function () {
 		console.log('App Hide')
@@ -15,7 +15,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "@/uni_modules/uview-plus/index.scss";
+
 :root {
 	--primary-color: #C75B39;
 	--primary-light: #E8A090;
@@ -222,6 +224,11 @@ page {
 }
 
 /* #ifdef H5 */
+uni-tabbar,
+.uni-tabbar {
+	display: none !important;
+}
+
 @media (min-width: 768px) {
 	html,
 	body {

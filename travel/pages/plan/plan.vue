@@ -30,13 +30,13 @@
 			<view class="form-card">
 				<view class="form-group">
 					<view class="form-label">
-						<text class="label-icon">📍</text>
+						<u-icon name="map-fill" color="#C75B39" size="16"></u-icon>
 						<text class="label-text">目的地城市</text>
 					</view>
 					<view class="form-input city-picker" @click="openCityPicker">
 						<text class="city-value" v-if="formData.city">{{ formData.city }}</text>
 						<text class="city-placeholder" v-else>请选择或搜索目的地城市</text>
-						<text class="city-arrow">›</text>
+						<u-icon name="arrow-right" color="#B8A590" size="14"></u-icon>
 					</view>
 					<view class="hot-cities">
 						<view class="hot-city" :class="{ active: formData.city === city }"
@@ -48,7 +48,7 @@
 
 				<view class="form-group">
 					<view class="form-label">
-						<text class="label-icon">📅</text>
+						<u-icon name="calendar-fill" color="#C75B39" size="16"></u-icon>
 						<text class="label-text">出行日期</text>
 					</view>
 					<view class="date-range">
@@ -71,23 +71,23 @@
 
 				<view class="form-group">
 					<view class="form-label">
-						<text class="label-icon">🚗</text>
+						<u-icon name="car-fill" color="#C75B39" size="16"></u-icon>
 						<text class="label-text">交通方式</text>
 					</view>
 					<view class="option-group">
 						<view class="option-item" :class="{ active: formData.transportation === '公共交通' }"
 							@click="formData.transportation = '公共交通'">
-							<text class="option-icon">🚌</text>
+							<u-icon name="car" color="#8B7355" size="18"></u-icon>
 							<text class="option-text">公共交通</text>
 						</view>
 						<view class="option-item" :class="{ active: formData.transportation === '自驾' }"
 							@click="formData.transportation = '自驾'">
-							<text class="option-icon">🚗</text>
+							<u-icon name="car-fill" color="#8B7355" size="18"></u-icon>
 							<text class="option-text">自驾</text>
 						</view>
 						<view class="option-item" :class="{ active: formData.transportation === '步行' }"
 							@click="formData.transportation = '步行'">
-							<text class="option-icon">🚶</text>
+							<u-icon name="man" color="#8B7355" size="18"></u-icon>
 							<text class="option-text">步行</text>
 						</view>
 					</view>
@@ -95,7 +95,7 @@
 
 				<view class="form-group">
 					<view class="form-label">
-						<text class="label-icon">🏨</text>
+						<u-icon name="home-fill" color="#C75B39" size="16"></u-icon>
 						<text class="label-text">住宿偏好</text>
 					</view>
 					<view class="option-group">
@@ -116,7 +116,7 @@
 
 				<view class="form-group">
 					<view class="form-label">
-						<text class="label-icon">❤️</text>
+						<u-icon name="heart-fill" color="#C75B39" size="16"></u-icon>
 						<text class="label-text">旅行偏好（可多选）</text>
 					</view>
 					<view class="tags-group">
@@ -129,7 +129,7 @@
 
 				<view class="form-group">
 					<view class="form-label">
-						<text class="label-icon">📝</text>
+						<u-icon name="edit-pen-fill" color="#C75B39" size="16"></u-icon>
 						<text class="label-text">额外要求（可选）</text>
 					</view>
 					<textarea class="form-textarea" v-model="formData.free_text_input"
@@ -137,9 +137,7 @@
 						placeholder-class="textarea-placeholder" />
 				</view>
 
-				<view class="submit-btn" @click="submitPlan">
-					<text class="btn-text">开始规划</text>
-				</view>
+				<u-button type="primary" shape="circle" text="开始规划" :customStyle="{ height: '48px', fontSize: '16px' }" @click="submitPlan"></u-button>
 			</view>
 		</view>
 
@@ -204,6 +202,7 @@
 				</scroll-view>
 			</view>
 		</view>
+		<custom-tabbar current="plan"></custom-tabbar>
 	</view>
 </template>
 
@@ -271,6 +270,7 @@ const tripPlan = ref(null)
 const savedSpots = ref([])
 
 onShow(() => {
+	uni.hideTabBar({ fail() {} })
 	savedSpots.value = TripManager.getPlan()
 })
 
@@ -478,7 +478,7 @@ page {
 .content {
 	min-height: 100vh;
 	background: #FDF8F3;
-	padding-bottom: 160rpx;
+	padding-bottom: 40rpx;
 }
 
 /* ========== 头部 ========== */
@@ -1010,10 +1010,10 @@ page {
 /* ========== 底部 ========== */
 .bottom-action {
 	position: fixed;
-	bottom: 0;
+	bottom: 100rpx;
 	left: 0;
 	right: 0;
-	padding: 24rpx 32rpx 40rpx;
+	padding: 24rpx 32rpx;
 	background: #fff;
 	box-shadow: 0 -4rpx 20rpx rgba(45, 24, 16, 0.08);
 	z-index: 10;

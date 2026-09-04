@@ -1,17 +1,8 @@
 <template>
 	<view class="page">
+		<app-navbar title="我的订单"></app-navbar>
 		<view class="header">
-			<view class="nav">
-				<text class="back" @click="goBack">←</text>
-				<text class="title">我的订单</text>
-				<text class="ghost"></text>
-			</view>
-			<view class="tabs">
-				<view class="tab" :class="{ active: tab === item.key }" v-for="item in tabs" :key="item.key"
-					@click="tab = item.key">
-					<text>{{ item.label }}</text>
-				</view>
-			</view>
+			<u-tabs :list="tabs" :current="tabIndex" :scrollable="false" lineColor="#C75B39" :activeStyle="{ color: '#C75B39', fontWeight: '600' }" :inactiveStyle="{ color: '#8B7355' }" @change="onTabChange"></u-tabs>
 		</view>
 
 		<view class="list" v-if="filtered.length">
@@ -40,27 +31,33 @@
 		</view>
 
 		<view class="empty" v-else>
-			<text class="empty-icon">◈</text>
-			<text class="empty-title">暂无订单</text>
-			<text class="empty-desc">去景点详情页即可预订</text>
-			<view class="btn primary" @click="goHome">去看看</view>
+			<u-empty mode="order" text="暂无订单" icon-color="#C75B39">
+				<u-button type="primary" shape="circle" size="small" text="去看看" @click="goHome"></u-button>
+			</u-empty>
 		</view>
 	</view>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue'
+import AppNavbar from '../../components/app-navbar/app-navbar.vue'
 import { onShow } from '@dcloudio/uni-app'
 import { getOrders, statusText, updateOrder } from '../../utils/user-store.js'
 
 const tab = ref('all')
 const orders = ref([])
 const tabs = [
-	{ key: 'all', label: '全部' },
-	{ key: 'pending', label: '待支付' },
-	{ key: 'paid', label: '已支付' },
-	{ key: 'used', label: '已使用' }
+	{ key: 'all', name: '全部' },
+	{ key: 'pending', name: '待支付' },
+	{ key: 'paid', name: '已支付' },
+	{ key: 'used', name: '已使用' }
 ]
+const tabIndex = computed(() => Math.max(0, tabs.findIndex((item) => item.key === tab.value)))
+
+function onTabChange(e) {
+	const next = tabs[e.index]
+	if (next) tab.value = next.key
+}
 
 const filtered = computed(() => {
 	if (tab.value === 'all') return orders.value
@@ -70,10 +67,6 @@ const filtered = computed(() => {
 onShow(() => {
 	orders.value = getOrders()
 })
-
-function goBack() {
-	uni.navigateBack({ fail: () => uni.switchTab({ url: '/pages/mine/mine' }) })
-}
 
 function goHome() {
 	uni.switchTab({ url: '/pages/index/index' })
@@ -126,13 +119,7 @@ function useOrder(order) {
 
 <style>
 .page { min-height: 100vh; background: #FDF8F3; padding-bottom: 60rpx; }
-.header { padding: 88rpx 32rpx 12rpx; background: linear-gradient(180deg, #F5E6D3 0%, #FDF8F3 100%); }
-.nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24rpx; }
-.back, .ghost { width: 64rpx; font-size: 36rpx; color: #2D1810; }
-.title { font-size: 36rpx; font-weight: 700; color: #2D1810; }
-.tabs { display: flex; gap: 12rpx; }
-.tab { padding: 12rpx 24rpx; border-radius: 28rpx; background: #fff; color: #8B7355; font-size: 24rpx; }
-.tab.active { background: #C75B39; color: #fff; }
+.header { padding: 8rpx 8rpx 12rpx; background: #FDF8F3; }
 .list { padding: 24rpx 32rpx; }
 .card { background: #fff; border-radius: 24rpx; padding: 24rpx; margin-bottom: 20rpx; box-shadow: 0 4rpx 20rpx rgba(45,24,16,0.06); }
 .card-top { display: flex; justify-content: space-between; margin-bottom: 16rpx; }

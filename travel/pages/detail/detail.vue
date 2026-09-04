@@ -5,10 +5,10 @@
 			<view class="header-gradient"></view>
 			<view class="header-actions">
 				<view class="action-btn" @click="goBack">
-					<text class="action-icon">←</text>
+					<u-icon name="arrow-left" color="#2D1810" size="18"></u-icon>
 				</view>
 				<view class="action-btn" @click="shareSpot">
-					<text class="action-icon">↗</text>
+					<u-icon name="share" color="#2D1810" size="18"></u-icon>
 				</view>
 			</view>
 			<view class="image-overlay">
@@ -28,19 +28,13 @@
 					<view class="tag" v-if="detail.tag">{{ detail.tag }}</view>
 					<view class="rating-box">
 						<text class="rating-score">{{ detail.rating || '4.9' }}</text>
-						<view class="rating-stars">
-							<text class="star">★</text>
-							<text class="star">★</text>
-							<text class="star">★</text>
-							<text class="star">★</text>
-							<text class="star">★</text>
-						</view>
+						<u-rate :modelValue="Number(detail.rating) || 4.9" :count="5" :readonly="true" activeColor="#C75B39" inactiveColor="#E8D5B5" size="14"></u-rate>
 					</view>
 				</view>
 				<text class="main-title">{{ detail.title }}</text>
 				<view class="location-row">
 					<view class="location-pin">
-						<text class="pin-icon">⌖</text>
+						<u-icon name="map-fill" color="#C75B39" size="14"></u-icon>
 					</view>
 					<text class="location-text">{{ detail.location }}</text>
 					<text class="distance-text">| {{ detail.distance || '2.3km' }}</text>
@@ -96,7 +90,7 @@
 				<view class="tips-card">
 					<view class="tip-row">
 						<view class="tip-icon-wrap">
-							<text class="tip-icon">◷</text>
+							<u-icon name="clock-fill" color="#C75B39" size="16"></u-icon>
 						</view>
 						<view class="tip-content">
 							<text class="tip-label">开放时间</text>
@@ -106,7 +100,7 @@
 					<view class="tip-divider"></view>
 					<view class="tip-row">
 						<view class="tip-icon-wrap">
-							<text class="tip-icon">☁</text>
+							<u-icon name="calendar-fill" color="#C75B39" size="16"></u-icon>
 						</view>
 						<view class="tip-content">
 							<text class="tip-label">建议游玩</text>
@@ -116,7 +110,7 @@
 					<view class="tip-divider"></view>
 					<view class="tip-row">
 						<view class="tip-icon-wrap">
-							<text class="tip-icon">☎</text>
+							<u-icon name="phone-fill" color="#C75B39" size="16"></u-icon>
 						</view>
 						<view class="tip-content">
 							<text class="tip-label">联系电话</text>
@@ -126,7 +120,7 @@
 					<view class="tip-divider"></view>
 					<view class="tip-row">
 						<view class="tip-icon-wrap">
-							<text class="tip-icon">ⓘ</text>
+							<u-icon name="info-circle-fill" color="#C75B39" size="16"></u-icon>
 						</view>
 						<view class="tip-content">
 							<text class="tip-label">适合人群</text>
@@ -151,7 +145,7 @@
 						</view>
 						<view class="map-button" @click="openMapApp">
 							<text class="map-button-text">导航前往</text>
-							<text class="map-arrow">→</text>
+							<u-icon name="arrow-rightward" color="#FFFFFF" size="14"></u-icon>
 						</view>
 					</view>
 				</view>
@@ -190,11 +184,11 @@
 		<view class="bottom-bar">
 			<view class="bottom-left">
 				<view class="bottom-action" @click="toggleFavorite">
-					<text class="bottom-icon">{{ isFavorite ? '♥' : '♡' }}</text>
+					<u-icon :name="isFavorite ? 'heart-fill' : 'heart'" :color="isFavorite ? '#C75B39' : '#8B7355'" size="22"></u-icon>
 					<text class="bottom-label">{{ isFavorite ? '已收藏' : '收藏' }}</text>
 				</view>
 				<view class="bottom-action" @click="contactService">
-					<text class="bottom-icon">💬</text>
+					<u-icon name="kefu-ermai" color="#8B7355" size="22"></u-icon>
 					<text class="bottom-label">客服</text>
 				</view>
 			</view>

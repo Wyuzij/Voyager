@@ -17,7 +17,7 @@
 			<view class="location-card">
 				<view class="location-left">
 					<view class="compass-icon">
-						<text class="compass-needle">↺</text>
+						<u-icon name="map-fill" color="#C75B39" size="20"></u-icon>
 					</view>
 					<view class="location-info">
 						<text class="location-city">{{ cityName }}</text>
@@ -25,18 +25,22 @@
 					</view>
 				</view>
 				<view class="weather-chip">
-					<text class="weather-icon">{{ weatherIcon }}</text>
+					<u-icon :name="weatherIconName" color="#C75B39" size="16"></u-icon>
 					<text class="weather-temp">{{ weatherTemp }}</text>
 				</view>
 			</view>
 
 			<view class="search-bar">
-				<view class="search-inner">
-					<text class="search-icon">⌕</text>
-					<input class="search-input" v-model="keyword" confirm-type="search"
-						placeholder="搜索目的地、景点或主题" placeholder-class="search-placeholder"
-						@confirm="onSearch" @input="onSearchInput" />
-				</view>
+				<u-search
+					v-model="keyword"
+					placeholder="搜索目的地、景点或主题"
+					:showAction="false"
+					bgColor="#FFFFFF"
+					shape="round"
+					:height="36"
+					@search="onSearch"
+					@change="onSearchInput"
+				></u-search>
 			</view>
 		</view>
 
@@ -93,9 +97,15 @@
 					<text class="section-title">附近的风景</text>
 				</view>
 				<view class="view-toggle">
-					<text class="toggle-option" :class="{ active: viewMode === 'list' }" @click="viewMode = 'list'">列表</text>
-					<text class="toggle-sep">|</text>
-					<text class="toggle-option" :class="{ active: viewMode === 'map' }" @click="viewMode = 'map'">地图</text>
+					<u-subsection
+						:list="['列表', '地图']"
+						:current="viewMode === 'list' ? 0 : 1"
+						activeColor="#C75B39"
+						bgColor="#F5E6D3"
+						:fontSize="12"
+						mode="button"
+						@change="onViewModeChange"
+					></u-subsection>
 				</view>
 			</view>
 
@@ -105,7 +115,7 @@
 			</view>
 
 			<view class="empty-filter" v-if="!isLoading && flowList.length === 0">
-				<text class="empty-filter-text">没有找到相关目的地，换个关键词试试</text>
+				<u-empty mode="search" text="没有找到相关目的地" icon-color="#C75B39"></u-empty>
 			</view>
 
 			<view class="spots-list" v-if="viewMode === 'list'">
@@ -120,20 +130,20 @@
 						<view class="spot-header">
 							<text class="spot-title">{{ item.title }}</text>
 							<view class="rating-badge">
-								<text class="rating-star">★</text>
+								<u-icon name="star-fill" color="#C75B39" size="12"></u-icon>
 								<text class="rating-value">{{ item.rating || '4.8' }}</text>
 							</view>
 						</view>
 						<view class="spot-meta">
 							<view class="meta-item">
-								<text class="meta-icon">⌖</text>
+								<u-icon name="map" color="#8B7355" size="13"></u-icon>
 								<text class="meta-text">{{ item.location || '北京市朝阳区' }}</text>
 							</view>
 						</view>
 						<view class="spot-tags">
-							<view class="tag" v-if="index % 2 === 0">热门推荐</view>
-							<view class="tag tag-secondary" v-if="index % 3 === 0">5A景区</view>
-							<view class="tag tag-tertiary" v-if="index % 4 === 0">亲子首选</view>
+							<u-tag v-if="index % 2 === 0" text="热门推荐" size="mini" bgColor="#F8E8E2" color="#C75B39" borderColor="#F0D0C4"></u-tag>
+							<u-tag v-if="index % 3 === 0" text="5A景区" size="mini" bgColor="#EEF4F4" color="#5D8A8E" borderColor="#D5E4E5"></u-tag>
+							<u-tag v-if="index % 4 === 0" text="亲子首选" size="mini" bgColor="#FFF3E0" color="#E65100" borderColor="#FFE0B2"></u-tag>
 						</view>
 						<view class="spot-footer">
 							<view class="price-group">
@@ -143,12 +153,12 @@
 							</view>
 							<view class="action-buttons">
 								<view class="action-btn plan-btn" @click.stop="planRoute(item)">
-									<text class="action-icon">⊕</text>
+									<u-icon name="plus-circle-fill" color="#FFFFFF" size="16"></u-icon>
 									<text class="action-text">规划</text>
 								</view>
 								<view class="action-btn fav-btn" :class="{ active: isFavorite(item) }"
 									@click.stop="toggleFavorite(item)">
-									<text class="action-icon">{{ isFavorite(item) ? '♥' : '♡' }}</text>
+									<u-icon :name="isFavorite(item) ? 'heart-fill' : 'heart'" :color="isFavorite(item) ? '#C75B39' : '#8B7355'" size="18"></u-icon>
 								</view>
 							</view>
 						</view>
@@ -158,19 +168,14 @@
 		</view>
 
 		<view class="loading-indicator" v-if="isLoading">
-			<view class="loading-dots">
-				<view class="dot"></view>
-				<view class="dot"></view>
-				<view class="dot"></view>
-			</view>
+			<u-loading-icon mode="circle" color="#C75B39"></u-loading-icon>
 			<text class="loading-text">加载中...</text>
 		</view>
 
-		<view class="no-more" v-if="!hasMore && flowList.length > 0">
-			<text class="no-more-text">没有更多了</text>
-		</view>
+		<u-loadmore v-if="!isLoading && flowList.length > 0" :status="hasMore ? 'loadmore' : 'nomore'" color="#8B7355" line></u-loadmore>
 
 		<view class="bottom-spacer"></view>
+		<custom-tabbar current="home"></custom-tabbar>
 	</view>
 </template>
 
@@ -191,7 +196,7 @@ const viewMode = ref('list')
 const cityName = ref('北京市')
 const districtName = ref('朝阳区')
 const weatherTemp = ref('24°C')
-const weatherIcon = ref('☀️')
+const weatherIconName = ref('star-fill')
 const flowList = ref([])
 const favorites = ref([])
 const currentPage = ref(1)
@@ -254,6 +259,7 @@ onLoad(() => {
 })
 
 onShow(() => {
+	uni.hideTabBar({ fail() {} })
 	loadFavorites()
 })
 
@@ -340,13 +346,15 @@ function toggleFavorite(item) {
 	saveFavorites(favorites.value)
 }
 
-function weatherEmoji(text) {
-	if (!text) return '☀️'
-	if (text.includes('雨')) return '🌧️'
-	if (text.includes('雪')) return '❄️'
-	if (text.includes('云') || text.includes('阴')) return '⛅'
-	if (text.includes('雾')) return '🌫️'
-	return '☀️'
+function weatherIconOf(text) {
+	if (!text) return 'star-fill'
+	if (text.includes('雨') || text.includes('雪')) return 'minus-circle-fill'
+	if (text.includes('云') || text.includes('阴') || text.includes('雾')) return 'more-circle-fill'
+	return 'star-fill'
+}
+
+function onViewModeChange(index) {
+	viewMode.value = index === 1 ? 'map' : 'list'
 }
 
 async function locateAndWeather() {
@@ -378,7 +386,7 @@ async function loadWeather(city) {
 		const first = res?.data?.[0]
 		if (first) {
 			weatherTemp.value = `${first.day_temp}°C`
-			weatherIcon.value = weatherEmoji(first.day_weather)
+			weatherIconName.value = weatherIconOf(first.day_weather)
 		}
 	} catch {
 		weatherTemp.value = '24°C'
@@ -422,7 +430,7 @@ page {
 .content {
 	min-height: 100vh;
 	background: #FDF8F3;
-	padding-bottom: 120rpx;
+	padding-bottom: 24rpx;
 }
 
 .hero-section {
@@ -522,7 +530,7 @@ page {
 .compass-icon {
 	width: 64rpx;
 	height: 64rpx;
-	background: linear-gradient(135deg, #C75B39 0%, #E8A090 100%);
+	background: #F8E8E2;
 	border-radius: 16rpx;
 	display: flex;
 	align-items: center;
@@ -576,6 +584,7 @@ page {
 .search-bar {
 	position: relative;
 	z-index: 1;
+	padding: 4rpx 0;
 }
 
 .search-inner {

@@ -1,44 +1,34 @@
 <template>
 	<view class="page">
-		<view class="header">
-			<view class="nav">
-				<text class="back" @click="goBack">←</text>
-				<text class="title">设置</text>
-				<text class="ghost"></text>
-			</view>
+		<app-navbar title="设置"></app-navbar>
+
+		<view class="group">
+			<u-cell-group :border="false">
+				<u-cell title="消息通知">
+					<template #right-icon>
+						<u-switch v-model="settings.notify" activeColor="#C75B39" @change="toggleNotify"></u-switch>
+					</template>
+				</u-cell>
+				<u-cell title="定位服务" :border="false">
+					<template #right-icon>
+						<u-switch v-model="settings.locationEnabled" activeColor="#C75B39" @change="toggleLocation"></u-switch>
+					</template>
+				</u-cell>
+			</u-cell-group>
 		</view>
 
 		<view class="group">
-			<view class="row">
-				<text class="label">消息通知</text>
-				<switch :checked="settings.notify" color="#C75B39" @change="toggleNotify" />
-			</view>
-			<view class="row">
-				<text class="label">定位服务</text>
-				<switch :checked="settings.locationEnabled" color="#C75B39" @change="toggleLocation" />
-			</view>
+			<u-cell-group :border="false">
+				<u-cell title="用户协议" isLink @click="showAgreement"></u-cell>
+				<u-cell title="隐私说明" isLink @click="showPrivacy"></u-cell>
+				<u-cell title="关于行迹" :border="false" value="v1.0.0" @click="showAbout"></u-cell>
+			</u-cell-group>
 		</view>
 
 		<view class="group">
-			<view class="row" @click="showAgreement">
-				<text class="label">用户协议</text>
-				<text class="arrow">›</text>
-			</view>
-			<view class="row" @click="showPrivacy">
-				<text class="label">隐私说明</text>
-				<text class="arrow">›</text>
-			</view>
-			<view class="row" @click="showAbout">
-				<text class="label">关于行迹</text>
-				<text class="value">v1.0.0</text>
-			</view>
-		</view>
-
-		<view class="group">
-			<view class="row" @click="clearCache">
-				<text class="label">清除缓存</text>
-				<text class="arrow">›</text>
-			</view>
+			<u-cell-group :border="false">
+				<u-cell title="清除缓存" isLink :border="false" @click="clearCache"></u-cell>
+			</u-cell-group>
 		</view>
 	</view>
 </template>
@@ -54,16 +44,12 @@ onShow(() => {
 	settings.value = getSettings()
 })
 
-function goBack() {
-	uni.navigateBack({ fail: () => uni.switchTab({ url: '/pages/mine/mine' }) })
+function toggleNotify(val) {
+	settings.value = saveSettings({ notify: !!val })
 }
 
-function toggleNotify(e) {
-	settings.value = saveSettings({ notify: !!e.detail.value })
-}
-
-function toggleLocation(e) {
-	settings.value = saveSettings({ locationEnabled: !!e.detail.value })
+function toggleLocation(val) {
+	settings.value = saveSettings({ locationEnabled: !!val })
 }
 
 function showAgreement() {
@@ -104,14 +90,16 @@ function clearCache() {
 </script>
 
 <style>
-.page { min-height: 100vh; background: #FDF8F3; }
-.header { padding: 88rpx 32rpx 24rpx; background: linear-gradient(180deg, #F5E6D3 0%, #FDF8F3 100%); }
-.nav { display: flex; align-items: center; justify-content: space-between; }
-.back, .ghost { width: 64rpx; font-size: 36rpx; color: #2D1810; }
-.title { font-size: 36rpx; font-weight: 700; color: #2D1810; }
-.group { margin: 24rpx 32rpx; background: #fff; border-radius: 20rpx; overflow: hidden; }
-.row { display: flex; align-items: center; justify-content: space-between; padding: 28rpx 24rpx; border-bottom: 1rpx solid #F0E6D8; }
-.row:last-child { border-bottom: none; }
-.label { font-size: 28rpx; color: #2D1810; }
-.value, .arrow { font-size: 26rpx; color: #8B7355; }
+.page {
+	min-height: 100vh;
+	background: #FDF8F3;
+}
+
+.group {
+	margin: 24rpx 32rpx;
+	background: #fff;
+	border-radius: 20rpx;
+	overflow: hidden;
+	box-shadow: 0 4rpx 20rpx rgba(45, 24, 16, 0.06);
+}
 </style>
